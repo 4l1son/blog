@@ -23,22 +23,25 @@ class MembroController extends Controller
     }
 
     public function store(Request $request) {
-        // Validar os dados do formulário aqui conforme necessário
         $data = $request->validate([
             'primeiro_nome' => 'required|string|max:255',
             'matricula' => 'required|string|max:255',
             'funcao' => 'required|string|max:255',
         ]);
 
-        // Chamar o método MembroServiceCreate passando os dados
         $this->membroService->MembroServiceCreate($data);
 
-        // Redirecionar ou fazer o que for apropriado após a criação
         return view('membros.index');
     }
 
     public function show($id) {
         $membro = $this->membroService->MembroServiceGetId($id);
         return view('membros.show', ['membro' => $membro]);
+    }
+
+    public function showMembers(){
+        $membros = $this->membroService->MembroServiceGet();
+        return view('membros.show', ['membros' => $membros]);
+
     }
 }

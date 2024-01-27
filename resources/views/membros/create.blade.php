@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,20 +94,57 @@
         #successModal {
             display: none;
         }
+        #loadingSpinner img {
+        display: none;
+    }
+
+    #loadingSpinner .fa-spinner {
+        font-size: 50px;
+        color: #007bff;
+        animation: spin 1s linear infinite;
+    }
+
+        #loadingSpinner {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #loadingSpinner img {
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite; /* Adiciona uma animação de rotação */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
 
     <div id="menu">
         <nav class="menu-item">
-            <p>Lista de Membros</p>
+            <a href="{{route('membros.get')}}"> 
+                <p>Lista de Membros</p>
+            </a>
         </nav>
 
         <nav class="menu-item">
-            <p>Cadastrar Membros</p>
+                <p href="{{route('membros.create')}}">
+                    <a >
+                        Cadastrar Membros
+                    </a>
+                </p>
+            
         </nav>
         <div class="menu-item">
-            <p>Sair</p>
+                <p>
+                    <a href="{{route('login')}}">     
+                        Sair
+                    </a>
+                </p>
         </div>
     </div>
 
@@ -128,14 +166,23 @@
         </form>
     </div>
 
+    <div id="loadingSpinner">
+        <img src="https://example.com/loading.gif" alt="Loading">
+        <p>Carregando...</p>
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script>
+     <script>
         function cadastrarMembro() {
             var form = $('#cadastrarMembroForm');
             var url = 'http://127.0.0.1:8000/membros';
             var method = form.attr('method');
             var data = form.serialize();
+
+            // Exibe o spinner de carregamento
+            $('#loadingSpinner').show();
 
             $.ajax({
                 url: url,
@@ -159,10 +206,13 @@
                 error: function(xhr, status, error) {
                     // Lidar com erros de solicitação
                     console.error(xhr.responseText);
+                },
+                complete: function() {
+                    // Esconde o spinner de carregamento após a conclusão (sucesso ou erro)
+                    $('#loadingSpinner').hide();
                 }
             });
         }
     </script>
-
 </body>
 </html>

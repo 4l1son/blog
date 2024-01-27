@@ -1,19 +1,17 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembroController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/membros', [MembroController::class, 'index']);
-Route::post('/membros', [MembroController::class, 'store'])->name('membros.store');
-Route::get('/membros/{id}', [MembroController::class, 'show'])->name('membros.show');
-Route::get('/', [MembroController::class, 'create'])->name('membros.create');
+Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/login',[LoginController::class,'login'])->name('login.auth');
+Route::get('/showlogins',[LoginController::class,'showlogins'])->name('login.show');
+
+Route::prefix('auth')->group(function () {
+    Route::get('/membros', [MembroController::class, 'index']);
+    Route::post('/membros', [MembroController::class, 'store'])->name('membros.store');
+    Route::get('/membros/{id}', [MembroController::class, 'show'])->name('membros.show');
+    Route::get('/ListaMembros',[MembroController::class,'showMembers'])->name('membros.get');
+    Route::get('/pagina', [MembroController::class, 'create'])->name('membros.create');        
+});
