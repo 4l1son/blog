@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service\MembroService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MembroController extends Controller
 {
@@ -14,7 +15,7 @@ class MembroController extends Controller
     }
     public function index() {
         $membros = $this->membroService->MembroServiceGet();
-        return view('membros.index', ['membros' => $membros]);
+        return view('membros.index').compact($membros);
     }
     
 
@@ -44,4 +45,20 @@ class MembroController extends Controller
         return view('membros.show', ['membros' => $membros]);
 
     }
+
+    public function filtro(){
+        $membros = DB::table('membro_models')
+            ->select('PrimeiroNome', 'Matricula', 'Funcao')
+            ->when(request('Matricula'), function ($query, $matricula) {
+                return $query->where('Matricula', $matricula);
+            });
+    
+        return view('membros.show', ['membros' => $membros->get()]);
+    }
+    
+    public function getFiltro(){
+        return view('membros.show');
+    }
+    
+    
 }
