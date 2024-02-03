@@ -53,7 +53,7 @@
             color: #007bff;
         }
 
-        #cadastrarMembroForm {
+        #cadastrarLoginForm {
             max-width: 400px;
             margin: 0 auto;
             background-color: #fff;
@@ -166,20 +166,17 @@
     </div>
 
     <div id="content">
-    <h1 style="text-align: center;">Cadastrar Membros</h1>
+    <h1 style="text-align: center;">Cadastrar Logins de usuarios</h1>
 
-        <form id="cadastrarMembroForm">
+        <form id="cadastrarLoginForm">
             @csrf
-            <label for="primeiro_nome">Primeiro Nome:</label>
-            <input type="text" name="primeiro_nome" required>
+            <label for="Email">Email:</label>
+            <input type="text" name="Email" required>
             
-            <label for="matricula">Matrícula:</label>
-            <input type="text" name="matricula" required>
-            
-            <label for="funcao">Função:</label>
-            <input type="text" name="funcao" required>
+            <label for="Senha">Senha:</label>
+            <input type="password" name="Senha" required>
 
-            <button type="button" onclick="cadastrarMembro()">Cadastrar</button>
+            <button type="button" onclick="cadastrarLoginForm()">Cadastrar</button>
         </form>
     </div>
 
@@ -192,9 +189,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
      <script>
-        function cadastrarMembro() {
-            var form = $('#cadastrarMembroForm');
-            var url = 'http://127.0.0.1:8000/membros';
+        function cadastrarLoginForm() {
+            var form = $('#cadastrarLoginForm');
+            var url = 'http://127.0.0.1:8000/cadastro-logins';
             var method = form.attr('method');
             var data = form.serialize();
 

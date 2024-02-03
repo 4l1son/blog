@@ -1,3 +1,4 @@
+
 <div id="menu">
         <nav class="menu-item">
             <a href="{{ route('membros.get') }}"> 
@@ -27,22 +28,59 @@
             <input type='text' placeholder="Pesquise os membros pela matricula" name="Matricula" />
             <button type="submit">Enviar</button>
         </form>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
 
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .no-members {
+        font-style: italic;
+    }
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Matricula</th>
+            <th>Função</th>
+        </tr>
+    </thead>
+    <tbody>
         @if(isset($membros))
             @foreach($membros as $membro)
-                <p>Membro nome: {{ $membro->PrimeiroNome }}</p>
-                <p>Matrícula: {{ $membro->Matricula }}</p>
-                <p>Função: {{ $membro->Funcao }}</p>
-                <hr>
+                <tr>
+                    <td>{{ $membro->PrimeiroNome }}</td>
+                    <td>{{ $membro->Matricula }}</td>
+                    <td>{{ $membro->Funcao }}</td>
+                </tr>
             @endforeach
         @else
-            <p>Nenhum membro disponível!</p>
+            <tr class="no-members">
+                <td colspan="3">Nenhum membro disponível!</td>
+            </tr>
         @endif
+    </tbody>
+</table>
+
     </div>
 
     <script>
     function filtrarDados() {
         event.preventDefault();
+        
         var inputValor = document.querySelector('input[name="Matricula"]').value;
         console.log(inputValor);
         document.forms[0].submit();

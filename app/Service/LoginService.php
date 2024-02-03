@@ -26,4 +26,21 @@ class LoginService
         $logins = LoginModel::all();
         return $logins;
     }
+
+    public function createLogin($data) {
+        $dataLogin = new LoginModel();
+        
+        // Assuming that 'Email' and 'Senha' are properties of LoginModel
+        $dataLogin->create([
+            'Email' => $data['Email'],
+            'Senha' => $data['Senha'],
+        ]);
+        if (ValidacaoService::validarEmail($data['Email'])) {
+            return "Login criado com sucesso!";
+        } else {
+            // Handle the case where email validation fails
+            return "Falha na validação do e-mail.";
+        }
+    
+}
 }

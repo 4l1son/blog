@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Service\LoginService;
+use App\Service\ValidacaoService;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -18,6 +19,11 @@ class LoginController extends Controller
     {
         return view('login.login');
     }
+    public function listaLogin(){
+     
+        $response = $this->showlogins();
+        return view('login.listaLogin',[$response]);
+    }
 
     public function login(Request $request)
     {
@@ -32,6 +38,16 @@ class LoginController extends Controller
 
     public function showlogins(){
         $response = $this->loginService->showLogins();
-        return $response;
+        return view('login.listaLogin', ['response' => $response]);   
+    }
+
+    public function cadastrologins(){
+        return view('login.cadastroLogin');
+    }
+
+    public function createLogin(Request $request){
+        $cond = $this->loginService->createLogin($request);
+        return ValidacaoService::validarEmail($cond);
+        
     }
 }
