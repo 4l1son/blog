@@ -1,4 +1,5 @@
 @isset($response)
+
     <table>
         <thead>
             <tr>

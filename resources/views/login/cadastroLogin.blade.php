@@ -166,19 +166,27 @@
     </div>
 
     <div id="content">
-    <h1 style="text-align: center;">Cadastrar Logins de usuarios</h1>
+    <h1 style="text-align: center;">Cadastrar Logins de usuários</h1>
 
-        <form id="cadastrarLoginForm">
-            @csrf
-            <label for="Email">Email:</label>
-            <input type="text" name="Email" required>
+    <form id="cadastrarLoginForm">
+    @csrf
+        <label for="Email">Email:</label>
+        <input type="text" name="Email" required>
             
-            <label for="Senha">Senha:</label>
-            <input type="password" name="Senha" required>
+        <label for="Senha">Senha:</label>
+        <input type="password" name="Senha" required>
 
-            <button type="button" onclick="cadastrarLoginForm()">Cadastrar</button>
-        </form>
+        <button type="button" onclick="cadastrarLoginForm()">Cadastrar</button>
+
+    </form>
+
+    <div class="alert alert-primary" role="alert" id="successAlert" style="display: none;">
+        <svg class="bi me-2" width="16" height="16" fill="currentColor" role="img" aria-label="Info:">
+            <use xlink:href="#info-fill"/>
+        </svg>
+        Login cadastrado com sucesso
     </div>
+
 
     <div id="loadingSpinner">
         <img src="https://example.com/loading.gif" alt="Loading">
@@ -189,44 +197,42 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
      <script>
-        function cadastrarLoginForm() {
-            var form = $('#cadastrarLoginForm');
-            var url = 'http://127.0.0.1:8000/cadastro-logins';
-            var method = form.attr('method');
-            var data = form.serialize();
+function cadastrarLoginForm() {
+    var form = $('#cadastrarLoginForm');
+    var url = 'http://127.0.0.1:8000/cadastro-logins';
+    var method = form.attr('method');
+    var data = form.serialize();
 
-            // Exibe o spinner de carregamento
-            $('#loadingSpinner').show();
+    // Exibe o spinner de carregamento
+    $('#loadingSpinner').show();
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: data,
-                beforeSend: function() {
-                    // Código a ser executado antes de enviar a solicitação
-                    console.log('Enviando solicitação...');
-                },
-                success: function(response) {
-                    alert("Cadastrado com sucesso!")
-                    if (response.success) {
-                        // Limpar formulário se necessário
-                        form.trigger('reset');
-                        // Adicionar classe ao modal para exibi-lo
-                        $('#successModal').modal('show');
-                    } else {
-                        console.error('Erro no cadastro:', response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // Lidar com erros de solicitação
-                    console.error(xhr.responseText);
-                },
-                complete: function() {
-                    // Esconde o spinner de carregamento após a conclusão (sucesso ou erro)
-                    $('#loadingSpinner').hide();
-                }
-            });
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        beforeSend: function() {
+            console.log('Enviando solicitação...');
+        },
+        success: function(response) {
+            // Esconder o spinner de carregamento
+            $('#loadingSpinner').hide();
+            // Mostrar o alerta de sucesso
+            $('#successAlert').slideDown(); // Exibe o alerta com animação de slide
+            setTimeout(function(){
+                $('#successAlert').slideUp(); // Esconde o alerta após alguns segundos (opcional)
+            }, 3000); // Tempo em milissegundos (3 segundos no exemplo)
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            // Esconder o spinner de carregamento em caso de erro
+            $('#loadingSpinner').hide();
         }
+    });
+}
+
     </script>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </html>

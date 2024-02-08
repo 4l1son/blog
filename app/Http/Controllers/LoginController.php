@@ -41,6 +41,7 @@ class LoginController extends Controller
         return view('login.listaLogin', ['response' => $response]);   
     }
 
+
     public function cadastrologins(){
         return view('login.cadastroLogin');
     }

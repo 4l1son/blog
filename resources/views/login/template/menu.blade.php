@@ -1,3 +1,4 @@
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +54,7 @@
             color: #007bff;
         }
 
-        #cadastrarMembroForm {
+        #cadastrarLoginForm {
             max-width: 400px;
             margin: 0 auto;
             background-color: #fff;
@@ -124,73 +125,45 @@
 </head>
 <body>
 
-   @include('membros.template.menu')
-  @yield('content')
-    <div id="content">
-    <h1 style="text-align: center;">Cadastrar Membros</h1>
+    <div id="menu">
+        <nav class="menu-item">
+            <a href="{{route('membros.get')}}"> 
+                <p>Lista de Membros</p>
+            </a>
+        </nav>
 
-        <form id="cadastrarMembroForm">
-            @csrf
-            <label for="primeiro_nome">Primeiro Nome:</label>
-            <input type="text" name="primeiro_nome" required>
-            
-            <label for="matricula">Matrícula:</label>
-            <input type="text" name="matricula" required>
-            
-            <label for="funcao">Função:</label>
-            <input type="text" name="funcao" required>
+        <nav class="menu-item">
+            <a href="{{route('login.listaLogin')}}"> 
+                <p>Lista de Logins</p>
+            </a>
+        </nav>
 
-            <button type="button" onclick="cadastrarMembro()">Cadastrar</button>
-        </form>
+
+        <nav class="menu-item">
+                <p href="{{route('membros.create')}}">
+                    <a >
+                        Cadastrar Membros
+                    </a>
+                </p>
+            
+        </nav>
+
+
+        <nav class="menu-item">
+                <p href="{{route('login.cadastroLogin')}}">
+                    <a >
+                        Cadastrar Logins
+                    </a>
+                </p>
+            
+        </nav>
+        <div class="menu-item">
+                <p>
+                    <a href="{{route('login')}}">     
+                        Sair
+                    </a>
+                </p>
+        </div>
     </div>
 
-    <div id="loadingSpinner">
-        <img src="https://example.com/loading.gif" alt="Loading">
-        <p>Carregando...</p>
-    </div>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-     <script>
-        function cadastrarMembro() {
-            var form = $('#cadastrarMembroForm');
-            var url = 'http://127.0.0.1:8000/membros';
-            var method = form.attr('method');
-            var data = form.serialize();
-
-            // Exibe o spinner de carregamento
-            $('#loadingSpinner').show();
-
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: data,
-                beforeSend: function() {
-                    // Código a ser executado antes de enviar a solicitação
-                    console.log('Enviando solicitação...');
-                },
-                success: function(response) {
-                    alert("Cadastrado com sucesso!")
-                    if (response.success) {
-                        // Limpar formulário se necessário
-                        form.trigger('reset');
-                        // Adicionar classe ao modal para exibi-lo
-                        $('#successModal').modal('show');
-                    } else {
-                        console.error('Erro no cadastro:', response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // Lidar com erros de solicitação
-                    console.error(xhr.responseText);
-                },
-                complete: function() {
-                    // Esconde o spinner de carregamento após a conclusão (sucesso ou erro)
-                    $('#loadingSpinner').hide();
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+@endsection

@@ -1,26 +1,6 @@
-
-<div id="menu">
-        <nav class="menu-item">
-            <a href="{{ route('membros.get') }}"> 
-                <p>Lista de Membros</p>
-            </a>
-        </nav>
-
-        <nav class="menu-item">
-            <a href="{{ route('membros.create') }}">
-                <p>Cadastrar Membros</p>
-            </a>
-        </nav>
-
-        <div class="menu-item">
-            <p>
-                <a href="{{ route('login') }}">     
-                    Sair
-                </a>
-            </p>
-        </div>
-    </div>
-
+  @include('membros.template.menu')
+  @yield('content')
+     
     <div style="margin-left: 550px;">
         <h1>Lista de Membros</h1>
         <form action="{{ route('membros.filtro') }}" method="post" onsubmit="filtrarDados()">

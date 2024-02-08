@@ -1,3 +1,4 @@
+@section('style')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,7 +21,7 @@
             justify-content: center;
         }
 
-        #bibliotecas {
+        #login-form {
             max-width: 400px;
             background-color: #fff;
             padding: 20px;
@@ -54,25 +58,9 @@
             background-color: #0056b3;
         }
     </style>
-</head>
-<body>
-   @include('login.template.global.index')
-   @yield('bibliotecas')
-    <div id="bibliotecas">
-        <h1>Login</h1>
-        <form  action="/pagina" method="get">
-            @csrf
-            <label for="username">Usuário:</label>
-            <input type="text" name="Email" required>
-            
-            <label for="password">Senha:</label>
-            <input type="password" name="Senha" required>
-
-            <button type="submit" class="btn-primary">Entrar</button>
-        </form>
-    </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+@endsection

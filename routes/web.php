@@ -7,7 +7,7 @@ use App\Http\Controllers\MembroController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::get('/login',[LoginController::class,'login'])->name('login.auth');
 Route::get('/listalogins',[LoginController::class,'showlogins'])->name('login.listaLogin');
-Route::get('/cadastrologins',[LoginController::class,'cadastrologins']);
+Route::get('/cadastro-logins',[LoginController::class,'cadastrologins'])->name('login.cadastroLogin');
 
 Route::post('/cadastro-logins',[LoginController::class,'createLogin'])->name('login.cadastroLogin');
 

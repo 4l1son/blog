@@ -1,4 +1,5 @@
-
+  @include('membros.template.menu')
+  @yield('content')
     <table>
         <thead>
             <tr>
