@@ -13,7 +13,7 @@ class LoginModel extends Model
 
     protected $fillable = [
         'Email',
-        'Senha',
+        'Senha'
     ];
 
 }

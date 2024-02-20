@@ -139,8 +139,8 @@
 
 
         <nav class="menu-item">
-                <p href="{{route('membros.create')}}">
-                    <a >
+                <p>
+                    <a href="{{route('membros.create')}}" >
                         Cadastrar Membros
                     </a>
                 </p>
@@ -149,8 +149,8 @@
 
 
         <nav class="menu-item">
-                <p href="{{route('login.cadastroLogin')}}">
-                    <a >
+                <p >
+                    <a href="{{route('login.cadastroLogin')}}" >
                         Cadastrar Logins
                     </a>
                 </p>
@@ -164,73 +164,82 @@
                 </p>
         </div>
     </div>
-
     <div id="content">
     <h1 style="text-align: center;">Cadastrar Logins de usuários</h1>
 
-    <form id="cadastrarLoginForm">
-    @csrf
+    <form id="cadastrarLoginForm" method="post">
+        @csrf
         <label for="Email">Email:</label>
         <input type="text" name="Email" required>
-            
+                        
         <label for="Senha">Senha:</label>
         <input type="password" name="Senha" required>
 
         <button type="button" onclick="cadastrarLoginForm()">Cadastrar</button>
-
     </form>
 
-    <div class="alert alert-primary" role="alert" id="successAlert" style="display: none;">
-        <svg class="bi me-2" width="16" height="16" fill="currentColor" role="img" aria-label="Info:">
-            <use xlink:href="#info-fill"/>
-        </svg>
-        Login cadastrado com sucesso
-    </div>
+    <div id="successAlert"></div>
+    <!-- Placeholder for error alert -->
+    <div id="errorAlert"></div>
 
-
-    <div id="loadingSpinner">
+    <div id="loadingSpinner" style="display: none;">
         <img src="https://example.com/loading.gif" alt="Loading">
         <p>Carregando...</p>
     </div>
+</div>
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-     <script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script>
 function cadastrarLoginForm() {
     var form = $('#cadastrarLoginForm');
     var url = 'http://127.0.0.1:8000/cadastro-logins';
-    var method = form.attr('method');
     var data = form.serialize();
-
-    // Exibe o spinner de carregamento
-    $('#loadingSpinner').show();
-
     $.ajax({
-        url: url,
-        type: 'POST',
-        data: data,
-        beforeSend: function() {
-            console.log('Enviando solicitação...');
-        },
-        success: function(response) {
-            // Esconder o spinner de carregamento
-            $('#loadingSpinner').hide();
-            // Mostrar o alerta de sucesso
-            $('#successAlert').slideDown(); // Exibe o alerta com animação de slide
-            setTimeout(function(){
-                $('#successAlert').slideUp(); // Esconde o alerta após alguns segundos (opcional)
-            }, 3000); // Tempo em milissegundos (3 segundos no exemplo)
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-            // Esconder o spinner de carregamento em caso de erro
-            $('#loadingSpinner').hide();
-        }
-    });
-}
+    url: url,
+    type: 'POST',
+    data: data,
+    beforeSend: function() {
+        console.log('Enviando solicitação...');
+    },
+    success: function(response) {
+        // Esconder o spinner de carregamento
+        $('#loadingSpinner').hide();
+        // Exibir o alerta de sucesso com mensagem e botão de fechar
+        $('#successAlert').html('<div class="d-flex justify-content-end" style="margin-top: 9.5rem;"><div class="alert alert-primary alert-dismissible" role="alert">\
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-check-circle-fill" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">\
+                                        <path d="M7.293 10.293a1 1 0 0 0 1.414 0l4-4a1 1 0 1 0-1.414-1.414L8 8.586l-2.293-2.293a1 1 0 1 0-1.414 1.414l3 3a1 1 0 0 0 1.414 0z"/>\
+                                    </svg>\
+                                    Login cadastrado com sucesso\
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>\
+                                </div></div>').slideDown();
+        setTimeout(function(){
+            $('#successAlert').slideUp();
+        }, 3000); // Exibir o alerta de sucesso por 3 segundos
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Extrair apenas a mensagem de erro da resposta
+        var errorMessage = JSON.parse(xhr.responseText).message;
+        // Exibir a mensagem de erro no alerta
+        $('#errorAlert').html('<div class="d-flex justify-content-end" style="margin-top: 9.5rem;"><div class="alert alert-danger alert-dismissible" role="alert">' + errorMessage + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div></div>').slideDown();
+        // Ocultar o alerta após 5 segundos
+        setTimeout(function(){
+            $('#errorAlert').slideUp();
+        }, 5000); // Exibir o alerta de erro por 5 segundos
+        $('#loadingSpinner').hide();
+    }
+});
 
-    </script>
+
+
+}
+</script>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

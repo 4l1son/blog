@@ -149,6 +149,7 @@
         <p>Carregando...</p>
     </div>
 
+    <div id="successAlert"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
@@ -171,15 +172,16 @@
                     console.log('Enviando solicitação...');
                 },
                 success: function(response) {
-                    alert("Cadastrado com sucesso!")
-                    if (response.success) {
-                        // Limpar formulário se necessário
-                        form.trigger('reset');
-                        // Adicionar classe ao modal para exibi-lo
-                        $('#successModal').modal('show');
-                    } else {
-                        console.error('Erro no cadastro:', response.message);
-                    }
+                      $('#successAlert').html('<div class="d-flex justify-content-end" style="margin-top: 33rem;"><div class="alert alert-primary alert-dismissible" role="alert">\
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-check-circle-fill" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">\
+                                        <path d="M7.293 10.293a1 1 0 0 0 1.414 0l4-4a1 1 0 1 0-1.414-1.414L8 8.586l-2.293-2.293a1 1 0 1 0-1.414 1.414l3 3a1 1 0 0 0 1.414 0z"/>\
+                                    </svg>\
+                                    Membro cadastrado com sucesso\
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>\
+                                </div></div>').slideDown();
+        setTimeout(function(){
+            $('#successAlert').slideUp();
+        }, 3000);
                 },
                 error: function(xhr, status, error) {
                     // Lidar com erros de solicitação

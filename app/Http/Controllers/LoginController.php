@@ -48,7 +48,11 @@ class LoginController extends Controller
 
     public function createLogin(Request $request){
         $cond = $this->loginService->createLogin($request);
-        return ValidacaoService::validarEmail($cond);
-        
+        return ValidacaoService::validarEmail($cond);        
+    }
+
+    public function loginDuplicado(){
+        $loginsDuplicados = \App\Models\LoginModel::select('Email')->groupBy('Email')->havingRaw('COUNT(*) > 1')->get();
+        return view('login.loginduplicados',['loginsDuplicados' => $loginsDuplicados]);
     }
 }

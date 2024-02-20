@@ -68,7 +68,7 @@
             <label for="password">Senha:</label>
             <input type="password" name="Senha" required>
 
-            <button type="submit" class="btn-primary">Entrar</button>
+            <button type="submit" class="btn-primary mt-3">Entrar</button>
         </form>
     </div>
 
