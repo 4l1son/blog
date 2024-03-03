@@ -37,7 +37,7 @@ class LoginController extends Controller
         if ($response['success']) {
             return view('membros.create');
         } else {
-            return redirect()->route('login');
+            return redirect()->route('login',['erro' => $erro]);
         }
     }
 

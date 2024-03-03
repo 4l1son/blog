@@ -4,8 +4,12 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MembroController;
 
+use App\Http\Middleware\AutenticacaoMiddleware;
+
     Route::get('/', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.auth');
+
+Route::middleware([AutenticacaoMiddleware::class])->group(function () {
 
 Route::get('/listalogins', [LoginController::class, 'showlogins'])->name('login.listaLogin');
 Route::get('/cadastro-logins', [LoginController::class, 'cadastrologins'])->name('login.cadastroLogin');
@@ -19,3 +23,4 @@ Route::get('/ListaMembros', [MembroController::class, 'showMembers'])->name('mem
 Route::get('/pagina', [MembroController::class, 'create'])->name('membros.create');
 Route::post('/filtro', [MembroController::class, 'filtro'])->name('membros.filtro');
 Route::get('/lista', [MembroController::class, 'getFiltro'])->name('membros.lista');
+});

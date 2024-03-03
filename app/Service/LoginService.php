@@ -29,9 +29,12 @@ class LoginService
     
         $request->validate($regras,$feedback);
     
-        $login = LoginModel::where('Email', $data['Email'])->first();
+        $login = LoginModel::where('Email', $data['Email'])->where('Senha',$data['Senha'])->first();
         if ($login) {
-            
+            session_start();
+            $_SESSION['Email'] = $login->Email;
+            $_SESSION['Senha'] = $login->Senha;
+
             return ['success' => true];
         }
         return ['success' => false, 'message' => 'Invalido email ou senha'];
