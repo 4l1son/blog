@@ -7,20 +7,39 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class LoginService
+
 {
+    
     public function login(Request $request)
     {
         $data = $request->validate([
-            'username' => 'required|string|max:255',
-            'password' => 'required|string|max:255',
+            'Email' => 'required|string|max:255',
+            'Senha' => 'required|string|max:255',
         ]);
-
-        if (Auth::attempt($data)) {
-            return redirect()->route('membros.create');
-        } else {
-            return back()->withErrors(['message' => 'Invalido email ou senha']);
+    
+        $regras = [
+            'Email' => 'email',
+            'Senha' => 'required'
+        ];
+    
+        $feedback = [
+            'Email' => 'O campo usuário  não é valido',
+            'Senha.required' => 'O campo senha é obrigatório'
+        ];
+    
+        $request->validate($regras,$feedback);
+    
+        $login = LoginModel::where('Email', $data['Email'])->first();
+        if ($login) {
+            
+            return ['success' => true];
         }
+        return ['success' => false, 'message' => 'Invalido email ou senha'];
     }
+    
+    
+
+
 
     public function showLogins(){
         $logins = LoginModel::all();
@@ -30,7 +49,6 @@ class LoginService
     public function createLogin($data) {
         $dataLogin = new LoginModel();
         
-        // Assuming that 'Email' and 'Senha' are properties of LoginModel
         $dataLogin->create([
             'Email' => $data['Email'],
             'Senha' => $data['Senha'],
@@ -38,7 +56,6 @@ class LoginService
         if (ValidacaoService::validarEmail($data['Email'])) {
             return "Login criado com sucesso!";
         } else {
-            // Handle the case where email validation fails
             return "Falha na validação do e-mail.";
         }
     

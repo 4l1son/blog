@@ -60,19 +60,23 @@
    @yield('bibliotecas')
     <div id="bibliotecas">
         <h1>Login</h1>
-        <form  action="/pagina" method="get">
+        <form action="/login" method="post" id="loginForm">
             @csrf
             <label for="username">Usuário:</label>
-            <input type="text" name="Email" required>
+            <input type="text" name="Email" value="{{ old('Email')}}" required>
+            {{$errors->has('Email') ? $errors->first('Email') : ''}}
             
             <label for="password">Senha:</label>
-            <input type="password" name="Senha" required>
-
+            <input type="password" name="Senha" value="{{ old('Senha')}}" required>
+            {{$errors->has('Senha') ? $errors->first('Senha') : ''}}
+            
             <button type="submit" class="btn-primary mt-3">Entrar</button>
         </form>
+        {{ isset($erro) && $erro != $erro ? " " : "" }}
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
 </body>
 </html>

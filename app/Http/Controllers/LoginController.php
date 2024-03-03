@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LoginModel;
 use App\Service\LoginService;
 use App\Service\ValidacaoService;
 use Illuminate\Http\Request;
@@ -15,9 +16,13 @@ class LoginController extends Controller
         $this->loginService = $loginService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('login.login');
+        $erro = '';
+        if($request->get('erro') == 1){
+            $erro = 'Usuario ou senha invalido';
+        }
+        return view('login.login',['titulo'=>'Login','erro' => $erro]);
     }
     public function listaLogin(){
      
@@ -28,11 +33,11 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $response = $this->loginService->login($request);
-        
+        $erro = $request->get('erro');  
         if ($response['success']) {
-            return redirect()->route('membros.create');
+            return view('membros.create');
         } else {
-            return back()->withErrors(['message' => $response['message']]);
+            return redirect()->route('login');
         }
     }
 
